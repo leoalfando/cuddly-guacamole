@@ -1,0 +1,33 @@
+{
+    "eslint.workingDirectories": [ "./account-server", "./server" ],
+    "breadcrumbs.enabled": true,
+    "files.exclude": {
+        // include the defaults from VS Code
+        "**/.git": true,
+        "**/.DS_Store": true,
+        // exclude .js and .js.map files, when in a TypeScript project
+        "**/*.js": { "when": "$(basename).ts"},
+        "**/*.js.map": true
+    },
+    "editor.autoIndent": "full",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true
+    },
+    "peacock.color": "#0d2e6b",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#134298",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#e31c62",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "titleBar.activeBackground": "#0d2e6b",
+        "titleBar.inactiveBackground": "#0d2e6b99",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#0d2e6b",
+        "statusBarItem.hoverBackground": "#134298",
+        "statusBar.foreground": "#e7e7e7",
+        "activityBar.activeBackground": "#134298",
+        "activityBar.activeBorder": "#e31c62"
+    }
+}
