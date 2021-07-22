@@ -1,3 +1,4 @@
+import { ResponseOutput } from './../../commons/ResponseOutput';
 import { assert } from 'chai';
 import AccountService from '../AccountService';
 import * as sinon from 'sinon';
@@ -5,6 +6,7 @@ import context from 'jest-plugin-context';
 import AccountRepository from '../repositories/AccountRepository';
 import AccountEntity from '../entities/AccountEntity';
 import ChildAccountEntity from '../entities/ChildAccountEntity';
+import { ErrorStatus } from '../../commons/ErrorStatus';
 
 
 describe('AccountService', () => {
@@ -55,6 +57,16 @@ describe('AccountService', () => {
             assert.deepEqual(result.statusCode, 404);
             assert.isUndefined(result.body);
             sinon.assert.calledOnce(repoGetAccountStub);
+        });
+
+        it('should return error if keyword is less than 3 letter', async () => {
+            const keyword = "le";
+            const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccounts');
+            const result = await accountService.getAccounts(keyword);
+            const expectedResult = ResponseOutput.createBadRequestResponse(ErrorStatus.ACCOUNT_GET_LIST_MIN_KEYWORD);
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.notCalled(repoGetAccountStub);
         });
 
     });
