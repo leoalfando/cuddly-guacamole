@@ -45,5 +45,17 @@ describe('AccountService', () => {
             sinon.assert.calledOnce(repoGetAccountStub);
         });
 
+        it('should return error and empty body', async () => {
+            const keyword = "leo";
+            const repoGetAccountResult = [];
+            const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccounts').resolves(repoGetAccountResult);
+            const result = await accountService.getAccounts(keyword);
+
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.deepEqual(result.statusCode, 404);
+            assert.isUndefined(result.body);
+            sinon.assert.calledOnce(repoGetAccountStub);
+        });
+
     });
 });
