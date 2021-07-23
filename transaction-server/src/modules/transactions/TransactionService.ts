@@ -1,4 +1,6 @@
+import { Response } from 'express';
 import 'reflect-metadata';
+import { ErrorStatus } from '../commons/ErrorStatus';
 import { ResponseOutput } from '../commons/ResponseOutput';
 import TransactionConverter from './converters/TransactionConverter';
 import TransactionDto from './dtos/TransactionDto';
@@ -15,6 +17,6 @@ export default class TransactionService {
       const newDto = transactionConverter.convertToDto(newTransaction);
       return ResponseOutput.createCreatedRequestResponse(newDto);
     }
-    return null;
+    return ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.TRANSACTION_CREATE_FAILED);
   }
 }

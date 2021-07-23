@@ -69,5 +69,31 @@ describe('TransactionService', () => {
             sinon.assert.calledOnce(repoGetTransactionStub);
             sinon.assert.calledOnce(convertToDtoStub);
         });
+
+        it('should return error if creation failed', async () => {
+            // Arrange
+            const entity = new TransactionEntity();
+            entity.amount = 500;
+            entity.transactionCode = TransactionType.CREDIT;
+            entity.accountId = 100;
+            const convertFromDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertFromDto').resolves(entity);
+            const repoCreateTransactionStub = sandbox.stub(TransactionRepository.prototype, 'create').resolves(null);
+            const repoGetTransactionStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionById');
+            const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
+            const expectedResult = ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.TRANSACTION_CREATE_FAILED);
+
+            // Act
+            const result = await transactionService.create(dto);
+
+            // Assert
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.isNotNull(result.body);
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.calledOnce(convertFromDtoStub);
+            sinon.assert.calledOnce(repoCreateTransactionStub);
+            sinon.assert.notCalled(repoGetTransactionStub);
+            sinon.assert.notCalled(convertToDtoStub);
+        });
+
     });
 });
