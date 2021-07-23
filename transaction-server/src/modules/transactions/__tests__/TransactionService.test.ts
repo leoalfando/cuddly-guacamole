@@ -95,5 +95,27 @@ describe('TransactionService', () => {
             sinon.assert.notCalled(convertToDtoStub);
         });
 
+        it('should return error entity is empty', async () => {
+            // Arrange
+            const newEntity = new TransactionEntity();
+            const convertFromDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertFromDto').resolves(newEntity);
+            const repoCreateTransactionStub = sandbox.stub(TransactionRepository.prototype, 'create');
+            const repoGetTransactionStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionById');
+            const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
+            const expectedResult = ResponseOutput.createBadRequestResponse(ErrorStatus.TRANSACTION_CREATE_REQ_NOT_FOUND);
+
+            // Act
+            const result = await transactionService.create(null);
+
+            // Assert
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.isNotNull(result.body);
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.calledOnce(convertFromDtoStub);
+            sinon.assert.notCalled(repoCreateTransactionStub);
+            sinon.assert.notCalled(repoGetTransactionStub);
+            sinon.assert.notCalled(convertToDtoStub);
+        });
+
     });
 });
