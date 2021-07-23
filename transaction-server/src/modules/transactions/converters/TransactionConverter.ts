@@ -1,9 +1,9 @@
 import TransactionDto from "../dtos/TransactionDto";
 import TransactionEntity from "../entities/TransactionEntity";
-
+import * as _ from 'lodash';
 export default class TransactionConverter {
   public convertFromDto (dto: TransactionDto): TransactionEntity {
-    if(dto){
+    if(!_.isEmpty(dto)){
       const result = new TransactionEntity();
       result.amount = dto.amount;
       result.transactionCode = dto.transactionCode;
@@ -14,12 +14,15 @@ export default class TransactionConverter {
   };
 
   public convertToDto (entity: TransactionEntity): TransactionDto {
-    const result = new TransactionDto();
-    result.id = entity.id;
-    result.amount = entity.amount;
-    result.transactionCode = entity.transactionCode;
-    result.accountId = entity.accountId;
-    result.createdDate = entity.createdDate;
-    return result;
+    if(!_.isEmpty(entity)){
+      const result = new TransactionDto();
+      result.id = entity.id;
+      result.amount = entity.amount;
+      result.transactionCode = entity.transactionCode;
+      result.accountId = entity.accountId;
+      result.createdDate = entity.createdDate;
+      return result;
+    }
+    return null;
   };
 }
