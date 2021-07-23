@@ -21,7 +21,8 @@
     "build:dev": "tsc-watch --onSuccess \"npm run start\"",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "npm run lint -- --fix",
-    "test": "node ./node_modules/jest/bin/jest"
+    "test": "node ./node_modules/jest/bin/jest",
+    "clean": "rm -rf dist"
   },
   "license": "UNLICENSED",
   "jest": {

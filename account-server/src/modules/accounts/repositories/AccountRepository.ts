@@ -27,15 +27,9 @@ export default class AccountRepository {
           const { firstName, lastName } = account;
           return (firstName.toLowerCase().includes(keyword.toLowerCase()) || lastName.toLowerCase().includes(keyword.toLowerCase()));
       })
-      // const accountRepository = getManager().getRepository(AccountEntity);
-      // const result: Promise<AccountEntity[]> = accountRepository.find();
-      // return result;
   };
 
     public async getAccountById (id: number): Promise<AccountEntity>{
-      // const accountRepository = getManager().getRepository(AccountEntity);
-      // const result: Promise<AccountEntity[]> = accountRepository.find();
-      // return result;
       return null;
   };
 }
