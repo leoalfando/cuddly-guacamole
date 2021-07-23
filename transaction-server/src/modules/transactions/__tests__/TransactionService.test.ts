@@ -7,6 +7,7 @@ import context from 'jest-plugin-context';
 import TransactionRepository from '../repositories/TransactionRepository';
 import TransactionEntity from '../entities/TransactionEntity';
 import TransactionDto from '../dtos/TransactionDto';
+import TransactionCriteriaDto from '../dtos/TransactionCriteriaDto';
 import { ErrorStatus } from '../../commons/ErrorStatus';
 import TransactionConverter from '../converters/TransactionConverter';
 
@@ -117,5 +118,19 @@ describe('TransactionService', () => {
             sinon.assert.notCalled(convertToDtoStub);
         });
 
+    });
+
+    context('#getTransactionList#', () => {
+        it('should return 200 and list of transactions', async () => {
+            // Arrange
+            const criteriaDto = new TransactionCriteriaDto();
+            criteriaDto.accountId = '100';
+            criteriaDto.page = '1';
+            criteriaDto.limit = '5';
+
+            // Act
+            const result = await transactionService.getTransactionList(null);
+
+        });
     });
 });

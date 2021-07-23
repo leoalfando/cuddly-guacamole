@@ -1,6 +1,9 @@
 import TransactionDto from "../dtos/TransactionDto";
 import TransactionEntity from "../entities/TransactionEntity";
 import * as _ from 'lodash';
+import TransactionCriteriaDto from "../dtos/TransactionCriteriaDto";
+import TransactionCriteriaEntity from "../entities/TransactionCriteriaEntity";
+import { TransactionType, TransactionOrderBy } from "../../commons/Enum";
 export default class TransactionConverter {
   public convertFromDto (dto: TransactionDto): TransactionEntity {
     if(!_.isEmpty(dto)){
@@ -13,7 +16,7 @@ export default class TransactionConverter {
     return null;
   };
 
-  public convertToDto (entity: TransactionEntity): TransactionDto {
+  public convertToDto(entity: TransactionEntity): TransactionDto {
     if(!_.isEmpty(entity)){
       const result = new TransactionDto();
       result.id = entity.id;
@@ -25,4 +28,21 @@ export default class TransactionConverter {
     }
     return null;
   };
+
+  public convertToCriteriaEntity(criteriaDto: TransactionCriteriaDto): TransactionCriteriaEntity{
+    if(!_.isEmpty(criteriaDto)){
+      const result = new TransactionCriteriaEntity();
+      result.accountId = _.toNumber(criteriaDto.accountId);
+      result.page = _.toNumber(criteriaDto.page);
+      result.limit = _.toNumber(criteriaDto.limit);
+      if(Object.values(TransactionType).includes(_.toNumber(criteriaDto.transactionCode))){
+        result.transactionCode = _.toNumber(criteriaDto.transactionCode);
+      }
+      if(Object.values(TransactionOrderBy).includes(criteriaDto.orderBy)){
+        result.orderBy = criteriaDto.orderBy;
+      }
+      return result;
+    }
+    return null;
+  }
 }
