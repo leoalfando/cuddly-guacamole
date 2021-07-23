@@ -11,7 +11,7 @@ export default [
             async (req: Request, res: Response): Promise<void> => {
                 const { body } = req;
                 const result = await transactionService.create(body);
-                res.status(200).send(result);
+                res.status(result.statusCode).send(result);
             },
         ],
     },

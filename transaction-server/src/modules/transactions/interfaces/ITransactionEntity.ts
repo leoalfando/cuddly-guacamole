@@ -1,8 +1,8 @@
 import { TransactionType } from './../../commons/Enum';
 export default interface TransactionEntity {
-  id: number;
+  id: string;
   amount: number;
   transactionCode: TransactionType;
   createdDate: Date;
-  createdBy: number;
+  accountId: number;
 }
