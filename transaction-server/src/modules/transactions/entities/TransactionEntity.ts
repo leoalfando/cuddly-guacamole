@@ -1,6 +1,7 @@
 import { TransactionType } from '../../commons/Enum';
+import ITransactionEntity from '../interfaces/ITransactionEntity';
 
-export default class TransactionDto {
+export default class TransactionEntity implements ITransactionEntity {
   id!: number;
   amount: number;
   transactionCode: TransactionType;
