@@ -1,5 +1,5 @@
 {
-  "name": "@cuddly-quacamole/user-server",
+  "name": "@cuddly-quacamole/transaction-server",
   "version": "0.1.0",
   "description": "User - Server",
   "main": "dist/server.js",

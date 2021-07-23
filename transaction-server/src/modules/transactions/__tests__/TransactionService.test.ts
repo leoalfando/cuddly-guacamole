@@ -41,13 +41,12 @@ describe('TransactionService', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    context('#getTransactions#', () => {
-        it('should return 200 and transaction list', async () => {
-
+    context('#create#', () => {
+        it('should return 201 and newly created transaction', async () => {
             const result = await transactionService.create(dto);
 
             assert.isNotNull(result, 'result should NOT be null');
-            assert.deepEqual(result.statusCode, 200);
+            assert.deepEqual(result.statusCode, 201);
             assert.isNotNull(result.body);
         });
     });
