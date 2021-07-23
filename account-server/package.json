@@ -16,20 +16,32 @@
   },
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "nodemon",
+    "start:dev": "ts-node-dev dist/server.js",
     "build": "tsc",
     "build:dev": "tsc-watch --onSuccess \"npm run start\"",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest"
+    "test": "node ./node_modules/jest/bin/jest",
+    "clean": "rm -rf dist"
   },
   "license": "UNLICENSED",
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "/dist/",
+      "/node_modules/"
+    ],
+    "testRegex": "(/__tests__/.*(test|spec))\\.(tsx?|ts)$"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
-    "express": "^5.0.0-alpha.8",
+    "express": "^4.17.1",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
@@ -37,23 +49,33 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.21",
     "@types/compression": "^1.7.1",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.13",
+    "@types/jest": "^26.0.24",
     "@types/node": "^14.14.33",
+    "@types/serve-static": "> 1.13.9",
+    "@types/sinon": "^10.0.2",
     "@types/swagger-ui-express": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-config-prettier": "^8.1.0",
+    "chai": "^4.3.4",
     "eslint": "^7.31.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1",
+    "jest": "^27.0.6",
+    "jest-plugin-context": "^2.9.0",
     "nodemon": "^1.19.4",
+    "prettier": "^2.2.1",
+    "sinon": "^11.1.1",
+    "ts-jest": "^27.0.4",
     "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.8",
     "tsc-watch": "^4.4.0",
     "typescript": "^4.2.3"
   }
