@@ -8,8 +8,9 @@ export default [
         path: '/api/v1/accounts',
         method: 'get',
         handler: [
-            async (_req: Request, res: Response): Promise<void> => {
-                const result = await accountService.getAccounts();
+            async (req: Request, res: Response): Promise<void> => {
+                const { query } = req;
+                const result = await accountService.getAccounts(query?.keyword as string);
                 res.status(200).send(result);
             },
         ],
