@@ -7,16 +7,19 @@ import context from 'jest-plugin-context';
 import TransactionRepository from '../repositories/TransactionRepository';
 import TransactionEntity from '../entities/TransactionEntity';
 import TransactionDto from '../dtos/TransactionDto';
+import TransactionListDto from '../dtos/TransactionListDto';
 import TransactionCriteriaDto from '../dtos/TransactionCriteriaDto';
 import { ErrorStatus } from '../../commons/ErrorStatus';
 import TransactionConverter from '../converters/TransactionConverter';
+import Pagination from '../../commons/models/Pagination';
+import TransactionCriteriaEntity from '../entities/TransactionCriteriaEntity';
 
 
 describe('TransactionService', () => {
     let transactionService: TransactionService;
     let transactionRepository: TransactionRepository;
     const sandbox: any = sinon.createSandbox();
-
+    const newDate = new Date();
     const dto = new TransactionDto();
     dto.amount = 2000000;
     dto.transactionCode = TransactionType.CREDIT;
@@ -25,15 +28,29 @@ describe('TransactionService', () => {
     transactionCredit.id = 'exampleid1';
     transactionCredit.amount = 2000000;
     transactionCredit.transactionCode = TransactionType.CREDIT;
-    transactionCredit.createdDate = new Date();
+    transactionCredit.createdDate = newDate;
     transactionCredit.accountId =  10;
 
     const transactionDebit = new TransactionEntity();
     transactionDebit.id = 'exampleid1';
     transactionDebit.amount = 100;
     transactionDebit.transactionCode = TransactionType.DEBIT;
-    transactionDebit.createdDate = new Date();
+    transactionDebit.createdDate = newDate;
     transactionDebit.accountId =  10;
+
+    const transactionCreditDto = new TransactionDto();
+    transactionCreditDto.id = 'exampleid1';
+    transactionCreditDto.amount = 2000000;
+    transactionCreditDto.transactionCode = TransactionType.CREDIT;
+    transactionCreditDto.createdDate = newDate;
+    transactionCreditDto.accountId = 10;
+
+    const transactionDebitDto = new TransactionDto();
+    transactionDebitDto.id = 'exampleid1';
+    transactionDebitDto.amount = 100;
+    transactionDebitDto.transactionCode = TransactionType.DEBIT;
+    transactionDebitDto.createdDate = newDate;
+    transactionDebitDto.accountId = 10;
 
     beforeEach(() => {
         transactionService = new TransactionService();
@@ -127,10 +144,70 @@ describe('TransactionService', () => {
             criteriaDto.accountId = '100';
             criteriaDto.page = '1';
             criteriaDto.limit = '5';
+            const criteriaEntity = new TransactionCriteriaEntity();
+            criteriaEntity.accountId = 100;
+            criteriaEntity.page = 1;
+            criteriaEntity.limit = 5;
+
+            const transactionListDto = new TransactionListDto();
+            transactionListDto.data = [transactionCreditDto, transactionDebitDto];
+            const pagination = new Pagination();
+            pagination.page = 1;
+            pagination.total = 2;
+            pagination.limit = 5;
+            transactionListDto.pagination = pagination;
+            const expectedResult = ResponseOutput.createOkResponse(transactionListDto);
+            const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity').resolves(criteriaEntity);
+            const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList').resolves([[transactionCredit, transactionDebit],2]);
+            const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
+            convertToDtoStub.onCall(0).resolves(transactionCreditDto);
+            convertToDtoStub.onCall(1).resolves(transactionDebitDto);
 
             // Act
-            const result = await transactionService.getTransactionList(null);
+            const result = await transactionService.getTransactionList(criteriaDto);
 
+            // Assert
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.isNotNull(result.body);
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.calledOnce(convertToCriteriaEntityStub);
+            sinon.assert.calledOnce(repoGetTransactionListStub);
+            sinon.assert.calledTwice(convertToDtoStub);
+        });
+
+        it('should return 200 and empty data is transaction not found', async () => {
+            // Arrange
+            const criteriaDto = new TransactionCriteriaDto();
+            criteriaDto.accountId = '100';
+            criteriaDto.page = '1';
+            criteriaDto.limit = '5';
+            const criteriaEntity = new TransactionCriteriaEntity();
+            criteriaEntity.accountId = 100;
+            criteriaEntity.page = 1;
+            criteriaEntity.limit = 5;
+
+            const transactionListDto = new TransactionListDto();
+            transactionListDto.data = [transactionCreditDto, transactionDebitDto];
+            const pagination = new Pagination();
+            pagination.page = 1;
+            pagination.total = 0;
+            pagination.limit = 5;
+            transactionListDto.pagination = pagination;
+            const expectedResult = ResponseOutput.createOkResponse(new TransactionListDto());
+            const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity').resolves(criteriaEntity);
+            const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList').resolves([[],0]);
+            const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
+
+            // Act
+            const result = await transactionService.getTransactionList(criteriaDto);
+
+            // Assert
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.isNotNull(result.body);
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.calledOnce(convertToCriteriaEntityStub);
+            sinon.assert.calledOnce(repoGetTransactionListStub);
+            sinon.assert.notCalled(convertToDtoStub);
         });
     });
 });

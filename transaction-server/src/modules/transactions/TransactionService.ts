@@ -26,7 +26,7 @@ export default class TransactionService {
   }
 
   public async getTransactionList(criteria: TransactionCriteriaDto): Promise<ResponseOutput> {
-    const criteriaDto = transactionConverter.convertToCriteriaEntity(criteria);
+    const criteriaDto = await transactionConverter.convertToCriteriaEntity(criteria);
     const [result, totalRecord] = await transactionRepository.getTransactionList(criteriaDto);
     const transactionListDto = new TransactionListDto();
     if (!_.isEmpty(result)) {
@@ -38,8 +38,8 @@ export default class TransactionService {
       transactionListDto.pagination.page = criteriaDto.page;
       transactionListDto.pagination.total = totalRecord;
       transactionListDto.pagination.calcNextPageToken();
-    }
 
+    }
     return ResponseOutput.createOkResponse(transactionListDto);
   }
 }
