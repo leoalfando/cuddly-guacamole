@@ -2,6 +2,7 @@ import { TransactionType } from './../../commons/Enum';
 import { ResponseOutput } from '../../commons/ResponseOutput';
 import { assert } from 'chai';
 import TransactionService from '../TransactionService';
+import TransactionDomain from '../domains/TransactionDomain';
 import * as sinon from 'sinon';
 import context from 'jest-plugin-context';
 import TransactionRepository from '../repositories/TransactionRepository';
@@ -17,7 +18,6 @@ import TransactionCriteriaEntity from '../entities/TransactionCriteriaEntity';
 
 describe('TransactionService', () => {
     let transactionService: TransactionService;
-    let transactionRepository: TransactionRepository;
     const sandbox: any = sinon.createSandbox();
     const newDate = new Date();
     const dto = new TransactionDto();
@@ -54,7 +54,6 @@ describe('TransactionService', () => {
 
     beforeEach(() => {
         transactionService = new TransactionService();
-        transactionRepository = new TransactionRepository();
     });
 
     afterEach(() => {
@@ -158,6 +157,7 @@ describe('TransactionService', () => {
             transactionListDto.pagination = pagination;
             const expectedResult = ResponseOutput.createOkResponse(transactionListDto);
             const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity').resolves(criteriaEntity);
+            const validateCriteriaStub = sandbox.stub(TransactionDomain.prototype, 'validateCriteria').resolves([])
             const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList').resolves([[transactionCredit, transactionDebit],2]);
             const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
             convertToDtoStub.onCall(0).resolves(transactionCreditDto);
@@ -171,6 +171,7 @@ describe('TransactionService', () => {
             assert.isNotNull(result.body);
             assert.deepEqual(result, expectedResult);
             sinon.assert.calledOnce(convertToCriteriaEntityStub);
+            sinon.assert.calledOnce(validateCriteriaStub);
             sinon.assert.calledOnce(repoGetTransactionListStub);
             sinon.assert.calledTwice(convertToDtoStub);
         });
@@ -195,6 +196,7 @@ describe('TransactionService', () => {
             transactionListDto.pagination = pagination;
             const expectedResult = ResponseOutput.createOkResponse(new TransactionListDto());
             const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity').resolves(criteriaEntity);
+            const validateCriteriaStub = sandbox.stub(TransactionDomain.prototype, 'validateCriteria').resolves([])
             const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList').resolves([[],0]);
             const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
 
@@ -206,7 +208,40 @@ describe('TransactionService', () => {
             assert.isNotNull(result.body);
             assert.deepEqual(result, expectedResult);
             sinon.assert.calledOnce(convertToCriteriaEntityStub);
+            sinon.assert.calledOnce(validateCriteriaStub);
             sinon.assert.calledOnce(repoGetTransactionListStub);
+            sinon.assert.notCalled(convertToDtoStub);
+        });
+
+        it('should return 400 and errors if domain return error', async () => {
+            // Arrange
+            const criteriaDto = new TransactionCriteriaDto();
+            criteriaDto.accountId = '100';
+            criteriaDto.page = '1';
+            criteriaDto.limit = '5';
+            const criteriaEntity = new TransactionCriteriaEntity();
+            criteriaEntity.accountId = 100;
+            criteriaEntity.page = 1;
+            criteriaEntity.limit = 5;
+
+            const expectedError = [ErrorStatus.TRANSACTION_GET_LIST_ACCOUNT_ID_MANDATORY]
+            const expectedResult = ResponseOutput.createBadRequestResponse(expectedError);
+
+            const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity');
+            const validateCriteriaStub = sandbox.stub(TransactionDomain.prototype, 'validateCriteria').resolves(expectedError)
+            const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList');
+            const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');
+
+            // Act
+            const result = await transactionService.getTransactionList(criteriaDto);
+
+            // Assert
+            assert.isNotNull(result, 'result should NOT be null');
+            assert.isNotNull(result.body);
+            assert.deepEqual(result, expectedResult);
+            sinon.assert.calledOnce(convertToCriteriaEntityStub);
+            sinon.assert.calledOnce(validateCriteriaStub);
+            sinon.assert.notCalled(repoGetTransactionListStub);
             sinon.assert.notCalled(convertToDtoStub);
         });
     });

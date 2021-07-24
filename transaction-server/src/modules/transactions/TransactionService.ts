@@ -9,9 +9,11 @@ import TransactionCriteriaDto from './dtos/TransactionCriteriaDto';
 import TransactionListDto from './dtos/TransactionListDto';
 import TransactionCriteriaEntity from './entities/TransactionCriteriaEntity';
 import { TransactionOrderBy } from '../commons/Enum';
+import TransactionDomain from './domains/TransactionDomain';
 
 const transactionConverter = new TransactionConverter();
 const transactionRepository = new TransactionRepository();
+const transactionDomain = new TransactionDomain();
 export default class TransactionService {
   public async create(dto: TransactionDto): Promise<ResponseOutput> {
     const entity = await transactionConverter.convertFromDto(dto);
@@ -30,6 +32,10 @@ export default class TransactionService {
   public async getTransactionList(criteriaDto: TransactionCriteriaDto): Promise<ResponseOutput> {
     const criteria = await transactionConverter.convertToCriteriaEntity(criteriaDto);
     this.setDefaultCriteria(criteria);
+    const domainErrors = await transactionDomain.validateCriteria(criteria);
+    if(domainErrors.length > 0){
+      return ResponseOutput.createBadRequestResponse(domainErrors);
+    }
     const [result, totalRecord] = await transactionRepository.getTransactionList(criteria);
     const transactionListDto = new TransactionListDto();
     if (!_.isEmpty(result)) {

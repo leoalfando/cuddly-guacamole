@@ -1,5 +1,5 @@
 {
-    "eslint.workingDirectories": [ "./account-server", "./server" ],
+    "eslint.workingDirectories": [ "./account-server", "./transaction-server" ],
     "breadcrumbs.enabled": true,
     "files.exclude": {
         // include the defaults from VS Code
