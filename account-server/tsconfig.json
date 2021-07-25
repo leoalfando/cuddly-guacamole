@@ -3,7 +3,6 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     "types": [
       "reflect-metadata",
-      "chai",
       "node",
       "jest"
     ],
@@ -13,7 +12,7 @@
     "lib": ["ES6"],                                   /* Specify library files to be included in the compilation. */
     "removeComments": true,                      /* Do not emit comments to output. */
     /* Strict Type-Checking Options */
-    "strict": false,                                 /* Enable all strict type-checking options. */
+    "strict": true,                                 /* Enable all strict type-checking options. */
     "noImplicitAny": false,                       /* Raise error on expressions and declarations with an implied 'any' type. */
     /* Module Resolution Options */
     "sourceMap": true,

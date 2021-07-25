@@ -16,3 +16,7 @@ export enum TransactionType {
     CREDIT = 1,
     DEBIT = 2,
 }
+
+export enum TransactionOrderBy {
+    dateDesc = 'dateDesc',
+}
