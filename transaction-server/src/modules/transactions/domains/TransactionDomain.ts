@@ -15,4 +15,22 @@ export default class TransactionDomain {
     }
     return errors;
   }
+
+  public async validateCreate(entity: TransactionEntity): Promise<ErrorStatus[]> {
+    const errors: ErrorStatus[] = [];
+    if(_.isNil(entity?.accountId)|| entity?.accountId < 1){
+      errors.push(ErrorStatus.TRANSACTION_CREATE_ACCOUNT_ID_MANDATORY);
+    }
+    if(_.isNil(entity?.amount)|| entity?.amount < 1){
+      errors.push(ErrorStatus.TRANSACTION_CREATE_AMOUNT_MANDATORY);
+    }
+    if(!(Object.values(TransactionType).includes(entity?.transactionCode))){
+      errors.push(ErrorStatus.TRANSACTION_CREATE_TYPE_INVALID);
+    }
+    return errors;
+  }
+
+  public processTransactionCreate(entity: TransactionEntity): void{
+    entity.createdDate = new Date();
+  }
 }
