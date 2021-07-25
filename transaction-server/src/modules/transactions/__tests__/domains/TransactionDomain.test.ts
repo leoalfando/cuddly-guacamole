@@ -94,7 +94,7 @@ describe('TransactionDomain', () => {
         entity.amount = 10000;
 
         // Act
-        await transactionDomain.processTransactionCreate(entity);
+        await transactionDomain.processCreate(entity);
 
         // Assert
         assert.isNotNull(entity.createdDate);

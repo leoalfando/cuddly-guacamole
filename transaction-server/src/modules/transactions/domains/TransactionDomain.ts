@@ -30,7 +30,7 @@ export default class TransactionDomain {
     return errors;
   }
 
-  public processTransactionCreate(entity: TransactionEntity): void{
+  public processCreate(entity: TransactionEntity): void{
     entity.createdDate = new Date();
   }
 }
