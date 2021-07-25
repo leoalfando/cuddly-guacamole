@@ -83,6 +83,21 @@ describe('TransactionDomain', () => {
         assert.isNotEmpty(result);
         assert.deepEqual(result, expectedError,  'Error mismatched');
       });
-  });
+    });
 
+    context('#processCreate', () => {
+      it('should update data', async () => {
+        // Arrange
+        const entity = new TransactionEntity();
+        entity.accountId = 100;
+        entity.transactionCode = 3;
+        entity.amount = 10000;
+
+        // Act
+        await transactionDomain.processTransactionCreate(entity);
+
+        // Assert
+        assert.isNotNull(entity.createdDate);
+      });
+    });
 });
