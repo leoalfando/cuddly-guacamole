@@ -14,7 +14,7 @@ export default [
             async (req: Request, res: Response): Promise<void> => {
                 const { body } = req;
                 const result = await transactionService.create(body);
-                res.status(result.statusCode).send(result);
+                res.status(result.statusCode).send(result.body);
             },
         ],
     },
@@ -26,7 +26,7 @@ export default [
             async (req: Request, res: Response): Promise<void> => {
                 const { query } = req;
                 const result = await transactionService.getTransactionList(query as any);
-                res.status(result.statusCode).send(result);
+                res.status(result.statusCode).send(result.body);
             },
         ],
     },
