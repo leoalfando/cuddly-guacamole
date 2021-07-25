@@ -38,7 +38,7 @@ describe('TransactionDomain', () => {
           criteria.transactionCode = 1000;
           const expectedError = [
             ErrorStatus.TRANSACTION_GET_LIST_ACCOUNT_ID_MANDATORY,
-            ErrorStatus.TRANSACTION_GET_LIST_TRANSACTION_TYPE_INVALID
+            ErrorStatus.TRANSACTION_GET_LIST_TYPE_INVALID
           ]
           // Act
           const result = await transactionDomain.validateCriteria(criteria);
