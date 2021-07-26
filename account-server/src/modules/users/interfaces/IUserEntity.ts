@@ -1,4 +1,4 @@
-export default interface AccountEntity {
+export default interface UserEntity {
   id: number;
   firstName: string;
   lastName: string;

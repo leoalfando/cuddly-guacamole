@@ -1,7 +1,7 @@
-import AccountEntity from '../entities/AccountEntity';
-import ChildAccountEntity from '../entities/ChildAccountEntity';
+import UserEntity from '../entities/UserEntity';
+import ChildUserEntity from '../entities/ChildUserEntity';
 
-const accounts: (AccountEntity|ChildAccountEntity)[]= [
+const accounts: (UserEntity|ChildUserEntity)[]= [
     {
         id: 1,
         firstName: "Leo",
@@ -21,15 +21,11 @@ const accounts: (AccountEntity|ChildAccountEntity)[]= [
 ];
 
 
-export default class AccountRepository {
-  public async getAccounts (keyword: string): Promise<AccountEntity[]>{
+export default class UserRepository {
+    public async getUsers (keyword: string): Promise<UserEntity[]>{
       return accounts.filter(account=>{
           const { firstName, lastName } = account;
           return (firstName.toLowerCase().includes(keyword.toLowerCase()) || lastName.toLowerCase().includes(keyword.toLowerCase()));
       })
-  };
-
-    public async getAccountById (id: number): Promise<AccountEntity>{
-      return null;
   };
 }

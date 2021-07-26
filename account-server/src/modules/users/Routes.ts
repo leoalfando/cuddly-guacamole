@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
-import AccountService from './AccountService';
+import UserService from './UserService';
 
-const accountService = new AccountService();
+const userService = new UserService();
 
 export default [
     {
-        path: '/api/v1/accounts',
+        path: '/api/v1/users',
         method: 'get',
         handler: [
             async (req: Request, res: Response): Promise<void> => {
                 const { query } = req;
-                const result = await accountService.getAccounts(query?.keyword as string);
+                const result = await userService.getUsers(query?.keyword as string);
                 res.status(200).send(result);
             },
         ],
