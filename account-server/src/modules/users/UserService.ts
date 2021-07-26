@@ -1,20 +1,29 @@
 import UserRepository from './repositories/UserRepository';
 import 'reflect-metadata';
 import { ResponseOutput } from '../commons/ResponseOutput';
-import { ErrorStatus } from '../commons/ErrorStatus';
+import UserCriteriaDto from './dtos/UserCriteriaDto';
+import UserConverter from './converters/UserConverter';
+import UserListDto from './dtos/UserListDto';
+import * as _ from 'lodash';
 
 const userRepository = new UserRepository();
-
+const userConverter = new UserConverter();
 export default class UserService {
-  public getUsers = async (keyword:string): Promise<ResponseOutput> => {
-    if(!keyword || keyword?.length < 3){
-      return ResponseOutput.createBadRequestResponse(ErrorStatus.ACCOUNT_GET_LIST_MIN_KEYWORD);
+  public getUserList = async (criteriaDto:UserCriteriaDto): Promise<ResponseOutput> => {
+    const criteria = await userConverter.convertToCriteriaEntity(criteriaDto);
+
+    const [result, totalRecord] = await userRepository.getUserList(criteria);
+    const userListDto = new UserListDto();
+    if (!_.isEmpty(result)) {
+      userListDto.data =  await Promise.all(_.map(result, async (data) => {
+          const result = await userConverter.convertToDto(data);
+          return result;
+      }));
+      userListDto.pagination.limit = criteria.limit;
+      userListDto.pagination.page = criteria.page;
+      userListDto.pagination.total = totalRecord;
+      userListDto.pagination.calcNextPageToken();
     }
-    const result = await userRepository.getUsers(keyword);
-    if(result?.length < 1){
-      return ResponseOutput.createNotFoundRequestResponse();
-    }
-    const response = ResponseOutput.createOkResponse(result);
-    return response;
+    return ResponseOutput.createOkResponse(userListDto);
   }
 }

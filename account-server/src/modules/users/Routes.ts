@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import UserCriteriaDto from './dtos/UserCriteriaDto';
 import UserService from './UserService';
 
 const userService = new UserService();
@@ -10,8 +11,8 @@ export default [
         handler: [
             async (req: Request, res: Response): Promise<void> => {
                 const { query } = req;
-                const result = await userService.getUsers(query?.keyword as string);
-                res.status(200).send(result);
+                const result = await userService.getUserList(query as unknown as UserCriteriaDto);
+                res.status(result.statusCode).send(result.body);
             },
         ],
     },
