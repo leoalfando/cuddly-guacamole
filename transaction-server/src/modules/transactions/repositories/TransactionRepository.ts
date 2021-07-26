@@ -27,7 +27,7 @@ export default class TransactionRepository {
       return entity.id;
   };
 
-  public async getTransactionById(id: string): Promise<TransactionEntity>{
+  public getTransactionById(id: string): TransactionEntity{
       return transactions?.find(t=>t.id===id);
   };
 

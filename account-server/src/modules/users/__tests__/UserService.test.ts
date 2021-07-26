@@ -103,8 +103,6 @@ describe('UserService', () => {
             const convertToDtoStub = sandbox.stub(UserConverter.prototype, 'convertToDto');
 
             const result = await userService.getUserList(criteriaDto);
-            console.log('result',result);
-            console.log('expectedResult',expectedResult);
             assert.isNotNull(result, 'result should NOT be null');
             assert.deepEqual(result.statusCode, 200);
             assert.deepEqual(result,expectedResult);
