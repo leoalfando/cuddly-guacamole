@@ -2,7 +2,7 @@ import UserEntity from '../entities/UserEntity';
 import ChildUserEntity from '../entities/ChildUserEntity';
 import UserCriteriaEntity from '../entities/UserCriteriaEntity';
 
-const accounts: (UserEntity|ChildUserEntity)[]= [
+const users: (UserEntity|ChildUserEntity)[]= [
     new UserEntity({
         id: 1,
         firstName: "Leo",
@@ -23,13 +23,17 @@ const accounts: (UserEntity|ChildUserEntity)[]= [
 
 
 export default class UserRepository {
-    public async getUserList(criteria: UserCriteriaEntity): Promise<[UserEntity[], number]>{
-      const result = await accounts.filter(account=>{
+  public async getUserList(criteria: UserCriteriaEntity): Promise<[UserEntity[], number]>{
+      const result = await users.filter(account=>{
           const { firstName, lastName } = account;
           const { keyword } = criteria;
           return (firstName.toLowerCase().includes(keyword.toLowerCase()) || lastName.toLowerCase().includes(keyword.toLowerCase()));
       })
       const totalData = result?.length;
       return [result, totalData];
+  };
+
+  public getUserById(id: number): UserEntity{
+    return users?.find(t=>t.id===id);
   };
 }

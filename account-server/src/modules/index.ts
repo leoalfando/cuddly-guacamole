@@ -1,3 +1,4 @@
 import userRoutes from './users/Routes';
+import accountRoutes from './accounts/Routes';
 
-export default [...userRoutes];
+export default [...userRoutes,...accountRoutes];
