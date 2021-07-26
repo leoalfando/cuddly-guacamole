@@ -1,5 +1,7 @@
+import { AccountType } from './../../commons/Enum';
 export default interface AccountEntity {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id: string;
+  type: AccountType;
+  createdDate: Date;
+  userId: number;
 }

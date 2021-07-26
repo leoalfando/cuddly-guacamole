@@ -1,7 +1,6 @@
 import { AccountType } from '../../commons/Enum';
-import IAccountEntity from '../interfaces/IAccountEntity';
 
-export default class AccountEntity implements IAccountEntity {
+export default class AccountDto{
   id!: string;
   type!: AccountType;
   createdDate!: Date;

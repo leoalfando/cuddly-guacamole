@@ -11,3 +11,11 @@ export enum Environment {
     STAGING = 'staging',
     PRODUCTION = 'production',
 }
+
+export enum TransactionType {
+    CREDIT = 1,
+    DEBIT = 2,
+}
+export enum AccountType {
+    CURRENT = 1,
+}

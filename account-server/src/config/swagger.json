@@ -8,7 +8,7 @@
   "schemes": ["http"],
   "produces": ["application/json"],
   "paths": {
-    "/accounts": {
+    "/users": {
       "get": {
         "tags": ["Search Text"],
         "summary": "Get list of user",

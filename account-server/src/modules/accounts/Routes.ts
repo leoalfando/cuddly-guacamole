@@ -6,12 +6,12 @@ const accountService = new AccountService();
 export default [
     {
         path: '/api/v1/accounts',
-        method: 'get',
+        method: 'post',
         handler: [
             async (req: Request, res: Response): Promise<void> => {
-                const { query } = req;
-                const result = await accountService.getAccounts(query?.keyword as string);
-                res.status(200).send(result);
+                const { body } = req;
+                const result = await accountService.create(body);
+                res.status(result.statusCode).send(result.body);
             },
         ],
     },
