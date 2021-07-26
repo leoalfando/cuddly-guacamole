@@ -20,6 +20,11 @@ export default class TransactionService {
     if(_.isEmpty(entity)){
       return ResponseOutput.createBadRequestResponse(ErrorStatus.TRANSACTION_CREATE_REQ_NOT_FOUND);
     }
+    const domainErrors = await transactionDomain.validateCreate(entity);
+    if(domainErrors.length > 0){
+      return ResponseOutput.createBadRequestResponse(domainErrors);
+    }
+    await transactionDomain.processCreate(entity);
     const newId = await transactionRepository.create(entity);
     if(newId){
       const newTransaction = await transactionRepository.getTransactionById(newId);
