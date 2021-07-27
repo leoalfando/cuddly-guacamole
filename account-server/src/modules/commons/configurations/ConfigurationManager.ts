@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Environment } from '../Enum';
 import ConfigDevelopment from './ConfigDevelopment';
+import * as _ from 'lodash';
 // import { ConfigProduction } from './ConfigProduction';
 // import { ConfigStaging } from './ConfigStaging';
 
@@ -26,7 +27,7 @@ export default class ConfigurationManager {
 
     public getConfigs(section?: string): any {
         if (section) {
-            return this.configs?.section;
+            return _.get(this.configs, section);
         }
         return this.configs;
     }

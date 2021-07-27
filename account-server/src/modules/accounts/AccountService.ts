@@ -1,18 +1,22 @@
+import { TransactionType } from './../commons/Enum';
 // import AccountRepository from './repositories/AccountRepository';
 import 'reflect-metadata';
 import { ResponseOutput } from '../commons/ResponseOutput';
 import { ErrorStatus } from '../commons/ErrorStatus';
 import AccountDto from './dtos/AccountDto';
+import TransactionPayload from './dtos/TransactionPayload';
 import AccountConverter from './converters/AccountConverter';
 import AccountDomain from './domains/AccountDomain';
 import AccountRepository from './repositories/AccountRepository';
 import * as _ from 'lodash';
 import UserService from '../users/UserService';
+import TransactionRepository from '../users/repositories/TransactionRepository';
 
 const accountRepository = new AccountRepository();
 const accountConverter = new AccountConverter();
 const accountDomain = new AccountDomain();
 const userService = new UserService();
+const transactionRepository = new TransactionRepository();
 export default class AccountService {
   public async create(dto: AccountDto): Promise<ResponseOutput> {
     const entity = await accountConverter.convertFromDto(dto);
@@ -34,6 +38,11 @@ export default class AccountService {
     if(newId){
       const newAccount = await accountRepository.getAccountById(newId);
       const newDto = accountConverter.convertToDto(newAccount);
+      const transactionPayload = new TransactionPayload();
+      transactionPayload.amount = dto.amount;
+      transactionPayload.accountId = newId;
+      transactionPayload.transactionCode = TransactionType.CREDIT
+      transactionRepository.createTransaction(transactionPayload);
       return ResponseOutput.createCreatedRequestResponse(newDto);
     }
     return ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.ACCOUNT_CREATE_FAILED);
