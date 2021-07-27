@@ -9,20 +9,18 @@ const config = new ConfigurationManager();
 const transactionConfig = config.getConfigs('accountServer');
 export default class TransactionRepository {
   public async createTransaction(transactionEntity: TransactionPayload): Promise<ResponseOutput> {
-    const url: string = `${transactionConfig.apiUrl}`;
+    const url: string = `${transactionConfig.apiUrl}/transactions`;
     const options: AxiosRequestConfig = {
         method: 'POST',
-        baseURL: url+'123123',
+        baseURL: url,
         data: transactionEntity,
         headers: {'x-api-key': transactionConfig.apiKey},
         timeout: 5000
     };
-    const response = await axios.request(options).catch(error=>{
-      console.log('==========', error)
-    }).finally();
+    const response = await axios.request(options);
     const responseOutput = new ResponseOutput();
-    // responseOutput.statusCode = response.status;
-    // responseOutput.body = response.data;
+    responseOutput.statusCode = response.status;
+    responseOutput.body = response.data;
     return responseOutput;
   }
 }

@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  account-server:
+    build:
+      context: ./account-server
+      dockerfile: Dockerfile
+    image: account-server
+    container_name: account-server-node
+    command: npm run start
+    volumes:
+      - ./account-server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8080:8080"
+    env_file: ./account-server/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - TRANSACTION_SERVER_API=http://transaction-server-node:8081/api/v1
+  transaction-server:
+    build:
+      context: ./transaction-server
+      dockerfile: Dockerfile
+    image: transaction-server
+    container_name: transaction-server-node
+    command: npm run start
+    volumes:
+      - ./transaction-server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8081:8081"
+    env_file: ./transaction-server/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=8081
+volumes:
+  data-volume:
+  node_modules:
+  web-root:
+    driver: local
