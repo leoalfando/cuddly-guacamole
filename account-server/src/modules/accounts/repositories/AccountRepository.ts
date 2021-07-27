@@ -21,7 +21,6 @@ export default class AccountRepository {
   public async create (entity: AccountEntity): Promise<string>{
       entity.id = uuidv4();
       accounts.push(entity);
-      console.log('accounts', accounts);
       return entity.id;
   };
 

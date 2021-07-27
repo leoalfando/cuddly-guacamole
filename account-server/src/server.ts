@@ -12,6 +12,7 @@ import errorHandlers from './middleware/errorHandlers';
 import routes from './modules';
 
 const { PORT = 3000 } = process.env;
+console.log('process.env', process.env);
 process.on('uncaughtException', (e) => {
     console.log(e);
     process.exit(1);

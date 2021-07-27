@@ -56,6 +56,7 @@ export default class TransactionService {
     }
     return ResponseOutput.createOkResponse(transactionListDto);
   }
+
   private setDefaultCriteria(criteria: TransactionCriteriaEntity){
     if(criteria?.limit){
       criteria.limit = 5;

@@ -5,4 +5,6 @@ export default class AccountDto{
   type!: AccountType;
   createdDate!: Date;
   userId!: number;
+
+  amount!:number;
 }
