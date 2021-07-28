@@ -22,20 +22,20 @@ Clone this repo to your local machine.
 
 ### Step 1: Set up the Development Environment
 
-You need to set up your development environment before you can do anything.
+Prerequisites:
+You must have Docker Installed in your System !
 
 **Install [Docker](https://docs.docker.com/get-docker/)**
-**Install [Node.js and NPM](https://nodejs.org/en/download/)**
-
-- on OSX use [homebrew](http://brew.sh) `brew install node`
-- on Windows use [chocolatey](https://chocolatey.org/) `choco install nodejs`
-> NOTE : If you work with a mac, we recommend to use homebrew for the installation.
-
+Download url: https://docs.docker.com/get-docker/
 
 Navigate to the **Main folder** directory and run the below command in your terminal :
-
 ```bash
 $ docker-compose up
+```
+
+To stop the docker images :
+```bash
+$ docker-compose down
 ```
 
 ## Features
