@@ -47,4 +47,9 @@ export default class AccountService {
     }
     return ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.ACCOUNT_CREATE_FAILED);
   }
+
+  public async getAccounts(userId: string): Promise<ResponseOutput> {
+    const result = await accountRepository.getAccountByUserId(parseInt(userId));
+    return ResponseOutput.createOkResponse(result);
+  }
 }
