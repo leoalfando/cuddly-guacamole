@@ -9,7 +9,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV === Environment.DEVELOPMENT) {
 const ConfigDevelopment = {
     accountServer:
     {
-    apiUrl: process.env.TRANSACTION_SERVER_API,
+        apiUrl: process.env.TRANSACTION_SERVER_API,
         apiKey: process.env.TRANSACTION_SERVER_API_KEY,
     }
 };
