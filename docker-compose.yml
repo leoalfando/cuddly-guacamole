@@ -17,6 +17,8 @@ services:
       - NODE_ENV=development
       - PORT=8080
       - TRANSACTION_SERVER_API=http://transaction-server-node:8081/api/v1
+    networks:
+      - app-network
   transaction-server:
     build:
       context: ./transaction-server
@@ -33,6 +35,33 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=8081
+    networks:
+      - app-network
+  react-app:
+    build:
+      context: ./transaction-server
+      dockerfile: Dockerfile
+    container_name: react-app
+    build: ./react-app
+    volumes:
+      - ./react-app/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - ACCOUNT_SERVER_URL=http://localhost:8080/api/v1/accounts
+      - ACCOUNT_SERVER_API_KEY=someapikey
+      - USER_SERVER_URL=http://localhost:8080/api/v1/users
+      - USER_SERVER_API_KEY=someapikey
+      - TRANSACTION_SERVER_URL=http://localhost:8081/api/v1/transactions
+      - TRANSACTION_SERVER_API_KEY=someapikey
+    command: npm start
+    networks:
+      - app-network
+networks:
+    app-network:
+        driver: bridge
 volumes:
   data-volume:
   node_modules:

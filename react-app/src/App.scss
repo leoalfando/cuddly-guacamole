@@ -217,3 +217,8 @@ input:focus {
     flex-wrap: wrap-reverse;
   }
 }
+
+.modal-main{
+  background: -webkit-linear-gradient(left, #065698, #25b7c4);
+  background: linear-gradient(to right, #065698, #25b7c4);
+}
