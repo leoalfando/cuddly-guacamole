@@ -6,5 +6,5 @@ export default class TransactionEntity implements ITransactionEntity {
   amount: number;
   transactionCode: TransactionType;
   createdDate: Date;
-  accountId: number;
+  accountId: string;
 }

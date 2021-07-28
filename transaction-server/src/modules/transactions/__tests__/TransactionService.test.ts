@@ -29,28 +29,28 @@ describe('TransactionService', () => {
     transactionCredit.amount = 2000000;
     transactionCredit.transactionCode = TransactionType.CREDIT;
     transactionCredit.createdDate = newDate;
-    transactionCredit.accountId =  10;
+    transactionCredit.accountId =  '10';
 
     const transactionDebit = new TransactionEntity();
     transactionDebit.id = 'exampleid1';
     transactionDebit.amount = 100;
     transactionDebit.transactionCode = TransactionType.DEBIT;
     transactionDebit.createdDate = newDate;
-    transactionDebit.accountId =  10;
+    transactionDebit.accountId =  '10';
 
     const transactionCreditDto = new TransactionDto();
     transactionCreditDto.id = 'exampleid1';
     transactionCreditDto.amount = 2000000;
     transactionCreditDto.transactionCode = TransactionType.CREDIT;
     transactionCreditDto.createdDate = newDate;
-    transactionCreditDto.accountId = 10;
+    transactionCreditDto.accountId = '10';
 
     const transactionDebitDto = new TransactionDto();
     transactionDebitDto.id = 'exampleid1';
     transactionDebitDto.amount = 100;
     transactionDebitDto.transactionCode = TransactionType.DEBIT;
     transactionDebitDto.createdDate = newDate;
-    transactionDebitDto.accountId = 10;
+    transactionDebitDto.accountId = '10';
 
     beforeEach(() => {
         transactionService = new TransactionService();
@@ -65,7 +65,7 @@ describe('TransactionService', () => {
             const entity = new TransactionEntity();
             entity.amount = 500;
             entity.transactionCode = TransactionType.CREDIT;
-            entity.accountId = 100;
+            entity.accountId = '100';
             const newId = "randomId12345";
             const resultEntity = Object.assign({}, entity);
             resultEntity.id = newId;
@@ -96,7 +96,7 @@ describe('TransactionService', () => {
             const entity = new TransactionEntity();
             entity.amount = 500;
             entity.transactionCode = TransactionType.CREDIT;
-            entity.accountId = 100;
+            entity.accountId = '100';
             const convertFromDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertFromDto').resolves(entity);
             const validateCreateStub = sandbox.stub(TransactionDomain.prototype, 'validateCreate').resolves([]);
             const processCreateStub = sandbox.stub(TransactionDomain.prototype, 'processCreate');
@@ -190,7 +190,7 @@ describe('TransactionService', () => {
             criteriaDto.page = '1';
             criteriaDto.limit = '5';
             const criteriaEntity = new TransactionCriteriaEntity();
-            criteriaEntity.accountId = 100;
+            criteriaEntity.accountId = '100';
             criteriaEntity.page = 1;
             criteriaEntity.limit = 5;
 
@@ -229,7 +229,7 @@ describe('TransactionService', () => {
             criteriaDto.page = '1';
             criteriaDto.limit = '5';
             const criteriaEntity = new TransactionCriteriaEntity();
-            criteriaEntity.accountId = 100;
+            criteriaEntity.accountId = '100';
             criteriaEntity.page = 1;
             criteriaEntity.limit = 5;
 
@@ -266,7 +266,7 @@ describe('TransactionService', () => {
             criteriaDto.page = '1';
             criteriaDto.limit = '5';
             const criteriaEntity = new TransactionCriteriaEntity();
-            criteriaEntity.accountId = 100;
+            criteriaEntity.accountId = '100';
             criteriaEntity.page = 1;
             criteriaEntity.limit = 5;
 

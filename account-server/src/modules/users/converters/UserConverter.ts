@@ -44,8 +44,8 @@ export default class UserConverter {
     if(!_.isEmpty(criteriaDto)){
       const result = new UserCriteriaEntity();
       result.keyword = criteriaDto.keyword;
-      result.page = _.toNumber(criteriaDto.page);
-      result.limit = _.toNumber(criteriaDto.limit);
+      result.page = _.toNumber(_.get(criteriaDto, 'page', "0"));
+      result.limit = _.toNumber(_.get(criteriaDto, 'limit', "0"));
       return result;
     }
     return null;

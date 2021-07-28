@@ -5,5 +5,5 @@ export default class TransactionDto {
   amount: number;
   transactionCode: TransactionType;
   createdDate: Date;
-  accountId: number;
+  accountId: string;
 }

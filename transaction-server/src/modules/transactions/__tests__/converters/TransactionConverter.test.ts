@@ -16,14 +16,14 @@ describe('TransactionConverter', () => {
     transactionCredit.amount = 2000000;
     transactionCredit.transactionCode = TransactionType.CREDIT;
     transactionCredit.createdDate = new Date();
-    transactionCredit.accountId =  10;
+    transactionCredit.accountId = '10';
 
     const transactionDebit = new TransactionEntity();
     transactionDebit.id = 'exampleid1';
     transactionDebit.amount = 100;
     transactionDebit.transactionCode = TransactionType.DEBIT;
     transactionDebit.createdDate = new Date();
-    transactionDebit.accountId =  10;
+    transactionDebit.accountId = '10';
 
     beforeEach(() => {
         transactionConverter = new TransactionConverter();
@@ -38,7 +38,7 @@ describe('TransactionConverter', () => {
             const dto = new TransactionDto();
             dto.amount = 2000000;
             dto.transactionCode = TransactionType.CREDIT;
-            dto.accountId = 100
+            dto.accountId = '100';
 
             // Act
             const result = await transactionConverter.convertFromDto(dto);
@@ -69,7 +69,7 @@ describe('TransactionConverter', () => {
             entity.id = "exampleid100";
             entity.amount = 2000000;
             entity.transactionCode = TransactionType.CREDIT;
-            entity.accountId = 100
+            entity.accountId = '100';
             entity.createdDate = new Date();
 
             // Act

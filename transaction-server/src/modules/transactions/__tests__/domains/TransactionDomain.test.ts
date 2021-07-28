@@ -22,7 +22,7 @@ describe('TransactionDomain', () => {
         it('should return empty if all validation passed', async () => {
           // Arrange
           const criteria = new TransactionCriteriaEntity();
-          criteria.accountId = 100;
+          criteria.accountId = '100';
           criteria.transactionCode = TransactionType.CREDIT;
 
           // Act
@@ -54,7 +54,7 @@ describe('TransactionDomain', () => {
       it('should return empty if all validation passed', async () => {
         // Arrange
         const entity = new TransactionEntity();
-        entity.accountId = 100;
+        entity.accountId = '100';
         entity.transactionCode = TransactionType.CREDIT;
         entity.amount = 10000;
 
@@ -89,7 +89,7 @@ describe('TransactionDomain', () => {
       it('should update data', async () => {
         // Arrange
         const entity = new TransactionEntity();
-        entity.accountId = 100;
+        entity.accountId = '100';
         entity.transactionCode = 3;
         entity.amount = 10000;
 
