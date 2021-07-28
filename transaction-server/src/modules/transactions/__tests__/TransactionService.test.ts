@@ -273,7 +273,7 @@ describe('TransactionService', () => {
             const expectedError = [ErrorStatus.TRANSACTION_GET_LIST_ACCOUNT_ID_MANDATORY]
             const expectedResult = ResponseOutput.createBadRequestResponse(expectedError);
 
-            const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity');
+            const convertToCriteriaEntityStub = sandbox.stub(TransactionConverter.prototype, 'convertToCriteriaEntity').resolves(criteriaEntity);
             const validateCriteriaStub = sandbox.stub(TransactionDomain.prototype, 'validateCriteria').resolves(expectedError)
             const repoGetTransactionListStub = sandbox.stub(TransactionRepository.prototype, 'getTransactionList');
             const convertToDtoStub = sandbox.stub(TransactionConverter.prototype, 'convertToDto');

@@ -38,11 +38,13 @@ export default class AccountService {
     if(newId){
       const newAccount = await accountRepository.getAccountById(newId);
       const newDto = accountConverter.convertToDto(newAccount);
-      const transactionPayload = new TransactionPayload();
-      transactionPayload.amount = dto.amount;
-      transactionPayload.accountId = newId;
-      transactionPayload.transactionCode = TransactionType.CREDIT
-      transactionRepository.createTransaction(transactionPayload);
+      if(!_.isNil(dto.amount) && dto.amount>0){
+        const transactionPayload = new TransactionPayload();
+        transactionPayload.amount = dto.amount;
+        transactionPayload.accountId = newId;
+        transactionPayload.transactionCode = TransactionType.CREDIT
+        transactionRepository.createTransaction(transactionPayload);
+      }
       return ResponseOutput.createCreatedRequestResponse(newDto);
     }
     return ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.ACCOUNT_CREATE_FAILED);
