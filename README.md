@@ -10,14 +10,10 @@ Application for manage user, add current account, create new debit transaction
   - [Step 3: Install dependencies](#step-3-install-dependencies)
   - [Step 4: Running Locally](#step-4-running-locally)
 - [Features](#features)
-  - [GraphQL](#graphql)
   - [Express](#express)
   - [React](#react)
-  - [React Apollo](#react-apollo)
   - [Typescript](#typescript)
-  - [JsonWebToken](#jsonwebtoken)
-  - [TSLint](#tslint)
-  - [Cors](#cors)
+  - [EsLint](#EsLint)
 - [License](#license)
 
 ## Installation
@@ -44,10 +40,6 @@ $ docker-compose up
 
 ## Features
 
-### GraphQL
-
-GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.
-
 ### Express
 
 Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
@@ -56,26 +48,14 @@ Express is a minimal and flexible Node.js web application framework that provide
 
 React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
 
-### React Apollo
-
-React Apollo allows you to fetch data from your GraphQL server and use it in building complex and reactive UIs using the React framework. React Apollo may be used in any context that React may be used. In the browser, in React Native, or in Node.js when you want to do server-side rendering.
-
 ### Typescript
 
 TypeScript is an open-source programming language developed and maintained by Microsoft. It is a strict syntactical superset of JavaScript, and adds optional static typing to the language. TypeScript is designed for development of large applications and transcompiles to JavaScript.
 
-### JsonWebToken
+### EsLint
 
-JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties.
+EsLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors
 
-### TSLint
-
-TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors
-
-
-### Cors
-
-Cross-origin resource sharing is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served
 
 ## License
 
