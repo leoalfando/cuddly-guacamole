@@ -22,7 +22,7 @@ class AccountForm extends React.Component<any, AccountFormState> {
             required
           />
           <button className='manage-button' type="submit"> Create
-          </button><br/>
+          </button>
         </form>
         <i style={{fontSize: '10px', paddingLeft:'200px'}}>*Account can be created without initial amount(insert 0 or empty)</i>
       </div>
