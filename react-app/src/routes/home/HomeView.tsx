@@ -38,6 +38,9 @@ class HomeView extends React.Component<any, AccountState> {
       activeAccountId:'',
     };
   }
+  componentDidMount(){
+    document.title = "🥑 Cuddly Guacamole"
+  }
   handleSubmit = async (event: any) => {
     try {
       event.preventDefault();
@@ -147,7 +150,7 @@ class HomeView extends React.Component<any, AccountState> {
                   <tr key ={data.id}>
                     <td>{data.id}</td>
                     <td>{data.firstName} {data.lastName}</td>
-                    <td className='d-flex'><p onClick={()=>this.showManageAccountModal(state, data.id)}>Manage Account</p></td>
+                    <td className='d-flex'><button className='manage-button' onClick={()=>this.showManageAccountModal(state, data.id)}>Manage Account</button></td>
                   </tr>
                 ))}
             </tbody>

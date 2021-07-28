@@ -33,6 +33,7 @@ const AccountModal = ({
                     className="search-form">
                     <input
                       type="number"
+                      min="0"
                       placeholder="Enter transaction amount"
                       name="newTransactionAmount"
                       value={state.newTransactionAmount}

@@ -13,6 +13,7 @@ class AccountForm extends React.Component<any, AccountFormState> {
           className="search-form">
           <input
             type="number"
+            min="0"
             placeholder="Enter initial account credit"
             name="initialAccountAmount"
             value={this.props.state.initialAccountAmount}
@@ -20,9 +21,10 @@ class AccountForm extends React.Component<any, AccountFormState> {
             className="search-input-box"
             required
           />
-          <button hidden type="submit">
-          </button>
+          <button className='manage-button' type="submit"> Create
+          </button><br/>
         </form>
+        <i style={{fontSize: '10px', paddingLeft:'200px'}}>*Account can be created without initial amount(insert 0 or empty)</i>
       </div>
     );
   }
