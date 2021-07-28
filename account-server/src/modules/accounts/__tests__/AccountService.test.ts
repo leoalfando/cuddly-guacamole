@@ -11,6 +11,7 @@ import { ErrorStatus } from '../../commons/ErrorStatus';
 import AccountConverter from '../converters/AccountConverter';
 import AccountDomain from '../domains/AccountDomain';
 import UserService from '../../users/UserService';
+import TransactionRepository from '../../users/repositories/TransactionRepository';
 
 
 describe('AccountService', () => {
@@ -30,6 +31,11 @@ describe('AccountService', () => {
   context('#create#', () => {
     it('should return 201 and newly created account', async () => {
         // Arrange
+        const accountDto = new AccountDto();
+        accountDto.userId = 1;
+        accountDto.type = AccountType.CURRENT;
+        accountDto.amount = 100;
+
         const entity = new AccountEntity();
         entity.type = AccountType.CURRENT;
         entity.userId = 1;
@@ -45,9 +51,10 @@ describe('AccountService', () => {
         const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create').resolves(newId);
         const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById').resolves(resultEntity);
         const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto').resolves(entity);
+        const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
 
         // Act
-        const result = await accountService.create(dto);
+        const result = await accountService.create(accountDto);
 
         // Assert
         assert.isNotNull(result, 'result should NOT be null');
@@ -60,6 +67,47 @@ describe('AccountService', () => {
         sinon.assert.calledOnce(repoCreateAccountStub);
         sinon.assert.calledOnce(repoGetAccountStub);
         sinon.assert.calledOnce(convertToDtoStub);
+        sinon.assert.calledOnce(createTransactionStub);
+    });
+    it('should return 201 without calling transaction create', async () => {
+        // Arrange
+        const accountDto = new AccountDto();
+        accountDto.userId = 1;
+        accountDto.type = AccountType.CURRENT;
+        accountDto.amount = 0;
+
+        const entity = new AccountEntity();
+        entity.type = AccountType.CURRENT;
+        entity.userId = 1;
+        const newId = "randomId12345";
+        const resultEntity = Object.assign({}, entity);
+        resultEntity.id = newId;
+
+        const getUserResult = ResponseOutput.createOkResponse({});
+        const convertFromDtoStub = sandbox.stub(AccountConverter.prototype, 'convertFromDto').resolves(entity);
+        const validateCreateStub = sandbox.stub(AccountDomain.prototype, 'validateCreate').resolves([]);
+        const processCreateStub = sandbox.stub(AccountDomain.prototype, 'processCreate');
+        const getUserStub = sandbox.stub(UserService.prototype, 'getUserById').resolves(getUserResult);
+        const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create').resolves(newId);
+        const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById').resolves(resultEntity);
+        const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto').resolves(entity);
+        const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
+
+        // Act
+        const result = await accountService.create(accountDto);
+
+        // Assert
+        assert.isNotNull(result, 'result should NOT be null');
+        assert.deepEqual(result.statusCode, 201);
+        assert.isNotNull(result.body);
+        sinon.assert.calledOnce(convertFromDtoStub);
+        sinon.assert.calledOnce(validateCreateStub);
+        sinon.assert.calledOnce(processCreateStub);
+        sinon.assert.calledOnce(getUserStub);
+        sinon.assert.calledOnce(repoCreateAccountStub);
+        sinon.assert.calledOnce(repoGetAccountStub);
+        sinon.assert.calledOnce(convertToDtoStub);
+        sinon.assert.notCalled(createTransactionStub);
     });
 
     it('should return error if entity is empty', async () => {
@@ -72,6 +120,7 @@ describe('AccountService', () => {
       const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create');
       const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById');
       const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto');
+      const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
 
       const expectedResult = ResponseOutput.createBadRequestResponse(ErrorStatus.ACCOUNT_CREATE_REQ_NOT_FOUND);
 
@@ -89,6 +138,7 @@ describe('AccountService', () => {
       sinon.assert.notCalled(repoCreateAccountStub);
       sinon.assert.notCalled(repoGetAccountStub);
       sinon.assert.notCalled(convertToDtoStub);
+      sinon.assert.notCalled(createTransactionStub);
     });
     it('should return error if domain validation failed', async () => {
       // Arrange
@@ -103,6 +153,7 @@ describe('AccountService', () => {
       const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create');
       const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById');
       const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto');
+      const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
 
       const expectedResult = ResponseOutput.createBadRequestResponse(ErrorStatus.ACCOUNT_CREATE_USER_ID_MANDATORY);
 
@@ -120,6 +171,7 @@ describe('AccountService', () => {
       sinon.assert.notCalled(repoCreateAccountStub);
       sinon.assert.notCalled(repoGetAccountStub);
       sinon.assert.notCalled(convertToDtoStub);
+      sinon.assert.notCalled(createTransactionStub);
     });
     it('should return error if user doesnt exist', async () => {
       // Arrange
@@ -134,6 +186,7 @@ describe('AccountService', () => {
       const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create');
       const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById');
       const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto');
+      const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
 
       const expectedResult = ResponseOutput.createBadRequestResponse(ErrorStatus.ACCOUNT_CREATE_USER_NOT_EXIST);
 
@@ -151,6 +204,7 @@ describe('AccountService', () => {
       sinon.assert.notCalled(repoCreateAccountStub);
       sinon.assert.notCalled(repoGetAccountStub);
       sinon.assert.notCalled(convertToDtoStub);
+      sinon.assert.notCalled(createTransactionStub);
     });
     it('should return error create failed', async () => {
       // Arrange
@@ -165,6 +219,7 @@ describe('AccountService', () => {
       const repoCreateAccountStub = sandbox.stub(AccountRepository.prototype, 'create').resolves(false);
       const repoGetAccountStub = sandbox.stub(AccountRepository.prototype, 'getAccountById');
       const convertToDtoStub = sandbox.stub(AccountConverter.prototype, 'convertToDto');
+      const createTransactionStub = sandbox.stub(TransactionRepository.prototype, 'createTransaction').resolves(null);
 
       const expectedResult = ResponseOutput.createInternalServerErrorRequestResponse(ErrorStatus.ACCOUNT_CREATE_FAILED);
 
@@ -182,6 +237,7 @@ describe('AccountService', () => {
       sinon.assert.calledOnce(repoCreateAccountStub);
       sinon.assert.notCalled(repoGetAccountStub);
       sinon.assert.notCalled(convertToDtoStub);
+      sinon.assert.notCalled(createTransactionStub);
     });
   });
 });
