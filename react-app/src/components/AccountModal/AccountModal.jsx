@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import './AccountModal.scss'
 import { format } from "date-fns";
 import AccountForm from '../AccountForm';
