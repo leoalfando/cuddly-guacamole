@@ -17,6 +17,7 @@ const transactionDomain = new TransactionDomain();
 export default class TransactionService {
   public async create(dto: TransactionDto): Promise<ResponseOutput> {
     const entity = await transactionConverter.convertFromDto(dto);
+
     if(_.isEmpty(entity)){
       return ResponseOutput.createBadRequestResponse(ErrorStatus.TRANSACTION_CREATE_REQ_NOT_FOUND);
     }
@@ -58,13 +59,13 @@ export default class TransactionService {
   }
 
   private setDefaultCriteria(criteria: TransactionCriteriaEntity){
-    if(criteria?.limit){
+    if(_.isNil(criteria?.limit)){
       criteria.limit = 5;
     }
-    if(criteria?.page){
+    if(_.isNil(criteria?.page)){
       criteria.page = 1;
     }
-    if(criteria?.orderBy){
+    if(_.isNil(criteria?.orderBy)){
       criteria.orderBy = TransactionOrderBy.dateDesc;
     }
   }

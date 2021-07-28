@@ -3,7 +3,7 @@ import ITransactionEntity from '../interfaces/ITransactionEntity';
 
 export default class TransactionCriteriaEntity{
   transactionCode: TransactionType;
-  accountId: number;
+  accountId: string;
   orderBy: TransactionOrderBy;
   page: number;
   limit: number;

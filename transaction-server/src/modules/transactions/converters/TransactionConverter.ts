@@ -32,9 +32,9 @@ export default class TransactionConverter {
   public convertToCriteriaEntity(criteriaDto: TransactionCriteriaDto): TransactionCriteriaEntity{
     if(!_.isEmpty(criteriaDto)){
       const result = new TransactionCriteriaEntity();
-      result.accountId = _.toNumber(criteriaDto.accountId);
-      result.page = _.toNumber(criteriaDto.page);
-      result.limit = _.toNumber(criteriaDto.limit);
+      result.accountId = criteriaDto.accountId;
+      result.page = _.toNumber(_.get(criteriaDto, 'page', "0"));
+      result.limit = _.toNumber(_.get(criteriaDto, 'limit', "0"));
       if(Object.values(TransactionType).includes(_.toNumber(criteriaDto.transactionCode))){
         result.transactionCode = _.toNumber(criteriaDto.transactionCode);
       }

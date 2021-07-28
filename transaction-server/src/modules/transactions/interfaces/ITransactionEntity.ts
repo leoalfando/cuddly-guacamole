@@ -4,5 +4,5 @@ export default interface TransactionEntity {
   amount: number;
   transactionCode: TransactionType;
   createdDate: Date;
-  accountId: number;
+  accountId: string;
 }
