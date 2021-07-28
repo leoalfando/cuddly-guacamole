@@ -1,6 +1,10 @@
 <h1 align="center">Cuddly Guacamole</h1>
 Application for manage user, add current account, create new debit transaction
 
+**Local Port**
+react-app: http://localhost:3000/
+account-server: http://localhost:8080
+transaction-server: http://localhost:8081
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
