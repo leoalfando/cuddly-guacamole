@@ -21,7 +21,6 @@ export default class Api {
     });
   }
   getUserList = async (parameters) =>{
-    console.log('env',env);
     return this.callAxios(this.apiConfig.user.url)
     .get('', {
       params:{

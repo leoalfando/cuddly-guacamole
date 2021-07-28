@@ -6,7 +6,6 @@ interface AccountFormState {
 
 class AccountForm extends React.Component<any, AccountFormState> {
   render() {
-    const { state } = this;
     return (
       <div>
         <form

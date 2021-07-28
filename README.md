@@ -28,9 +28,10 @@ You must have Docker Installed in your System !
 **Install [Docker](https://docs.docker.com/get-docker/)**
 Download url: https://docs.docker.com/get-docker/
 
+**Starting the application [Start]**
 Navigate to the **Main folder** directory and run the below command in your terminal :
 ```bash
-$ docker-compose up
+$ docker-compose -f docker-compose-local.yml up -d
 ```
 
 To stop the docker images :

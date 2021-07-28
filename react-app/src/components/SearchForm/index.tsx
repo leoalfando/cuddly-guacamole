@@ -6,7 +6,6 @@ interface SearchFormState {
 
 class SearchForm extends React.Component<any, SearchFormState> {
   render() {
-    const { state } = this;
     return (
       <div>
         <form
