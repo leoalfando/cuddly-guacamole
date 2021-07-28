@@ -41,6 +41,8 @@ const AccountModal = ({
                       className="search-input-box"
                       required
                     />
+                    <button className='manage-button' type="submit"> Add Transaction
+                    </button>
                   </form>
                 </Fragment>
               </div>
