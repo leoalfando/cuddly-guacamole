@@ -36,7 +36,7 @@ $ docker-compose -f docker-compose-local.yml up -d
 
 To stop the docker images :
 ```bash
-$ docker-compose down
+$ docker-compose -f docker-compose-local.yml down
 ```
 
 ## Features
