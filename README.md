@@ -8,6 +8,7 @@ transaction-server: http://localhost:8081
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [Architecture/Service Diagram](#Arcitecture/service-diagram)
 - [Installation](#installation)
   - [Step 1: Set up the Development Environment](#step-1-set-up-the-development-environment)
   - [Step 2: Set up Env](#step-2-set-up-env)
@@ -19,7 +20,8 @@ transaction-server: http://localhost:8081
   - [Typescript](#typescript)
   - [EsLint](#EsLint)
 - [License](#license)
-
+## Architecture/Service Diagram
+![](./docs/Service-Diagram.jpg)
 ## Installation
 
 Clone this repo to your local machine.
