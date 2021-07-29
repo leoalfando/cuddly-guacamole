@@ -2,11 +2,11 @@
 Application for manage user, add current account, create new debit transaction
 
 **Local Port**
-react-app: http://localhost:3000/
-account-server: http://localhost:8080
-Api Doc: http://localhost:8080/api-docs
-transaction-server: http://localhost:8081
-Api Doc: http://localhost:8081/api-docs
+react-app: http://localhost:3000<br/>
+account-server: http://localhost:8080<br/>
+Api Doc: http://localhost:8080/api-docs<br/>
+transaction-server: http://localhost:8081<br/>
+Api Doc: http://localhost:8081/api-docs<br/>
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -38,7 +38,7 @@ You must have Docker Installed in your System !
 **Install [Docker](https://docs.docker.com/get-docker/)**
 Download url: https://docs.docker.com/get-docker/
 
-**Starting the application [Start]**
+**Starting the application**
 Navigate to the **Main folder** directory and run the below command in your terminal :
 ```bash
 $ docker-compose -f docker-compose-local.yml up -d
