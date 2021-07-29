@@ -47,7 +47,7 @@ class HomeView extends React.Component<any, AccountState> {
       const { state } = this;
       if (state.userName.length >= 2) {
         const { data } = await api.getUserList({
-          keyword: null,
+          keyword: state.userName,
           page: state.page,
           limit: state.limit
         });
