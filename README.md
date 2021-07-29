@@ -1,5 +1,5 @@
 <h1 align="center">Cuddly Guacamole</h1>
-Application for manage user, add current account, create new debit transaction
+Application for manage user, add current account, create new credit transaction
 
 **Local Port**<br/>
 React-app: http://localhost:3000<br/>
