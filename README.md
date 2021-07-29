@@ -14,6 +14,7 @@ transaction-server: http://localhost:8081
   - [Step 2: Set up Env](#step-2-set-up-env)
   - [Step 3: Install dependencies](#step-3-install-dependencies)
   - [Step 4: Running Locally](#step-4-running-locally)
+- [Error Statuses](#error-status)
 - [Features](#features)
   - [Express](#express)
   - [React](#react)
@@ -44,6 +45,11 @@ To stop the docker images :
 ```bash
 $ docker-compose -f docker-compose-local.yml down
 ```
+
+## Error Status
+  [Error status doc](docs/ErrorStatus.md)
+
+## Step-by-Step tutorial
 
 ## Features
 
