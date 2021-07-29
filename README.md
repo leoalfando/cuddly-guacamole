@@ -4,7 +4,9 @@ Application for manage user, add current account, create new debit transaction
 **Local Port**
 react-app: http://localhost:3000/
 account-server: http://localhost:8080
+Api Doc: http://localhost:8080/api-docs
 transaction-server: http://localhost:8081
+Api Doc: http://localhost:8081/api-docs
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -46,13 +48,10 @@ To stop the docker images :
 ```bash
 $ docker-compose -f docker-compose-local.yml down
 ```
-
 ## Usage Tutorial
   [Usage tutorial doc](docs/Tutorial.md)
 ## Error Status
   [Error status doc](docs/ErrorStatus.md)
-
-## Step-by-Step tutorial
 
 ## Features
 

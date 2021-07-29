@@ -1,6 +1,6 @@
 <h1 align="center">Cuddly Guacamole Usage Tutorial</h1>
 
-
+PATH: localhost:3000<br/><br/>
 ### Step 1: Key user name search keyword
 In this view, the user is required to key in search keyword (minimum 2 characters)
 ![](./tutorial/tutorial-1.png)

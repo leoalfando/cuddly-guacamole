@@ -12,26 +12,90 @@
       "get": {
         "tags": ["Search Text"],
         "summary": "Get list of user",
+        "parameters": [{
+          "name": "keyword",
+          "in": "query",
+          "description": "Keyword search for user's name",
+          "example": "leo",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "description": "page number",
+          "example": "2",
+          "schema": {
+            "type": "number"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "number of data per page",
+          "example": "5",
+          "schema": {
+            "type": "number"
+          }
+        }],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Result with list of transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/transaction"
+                  }
+                }
+              }
+            }
           },
           "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":{
+                    "errors": [
+                      "TRANSACTION_GET_LIST_ACCOUNT_ID_MANDATORY",
+                      "TRANSACTION_GET_LIST_TYPE_INVALID"
+                    ]
+                  }
+                }
+              }
+            },
             "description": "Bad request"
           }
         },
         "content": {
           "application/json": {}
-        },
-        "parameters": [
-          {
-            "name": "keyword",
-            "in": "query",
-            "description": "Name keyword for user search",
-            "required": true,
-            "type": "string"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas":{
+      "user":{
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "user id",
+            "example": "string#123"
+          },
+          "firstName":{
+            "type": "string",
+            "description": "user fist name",
+            "example": "leo"
+          },
+          "lastName":{
+            "type": "string",
+            "description": "user last name",
+            "example": "leo"
           }
-        ]
+        }
       }
     }
   }

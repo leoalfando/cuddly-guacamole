@@ -106,15 +106,6 @@
             "schema": {
               "type": "number"
             }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "number of data per page",
-            "example": "5",
-            "schema": {
-              "type": "number"
-            }
           }
         ],
         "responses": {
